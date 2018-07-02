@@ -1,4 +1,10 @@
+require_relative './application_controller'
+
 class UserController < ApplicationController
+  get '/' do
+    haml :home
+  end
+
   get '/users' do
     @users = User.all
     haml :users
