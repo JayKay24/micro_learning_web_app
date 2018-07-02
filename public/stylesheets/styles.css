@@ -1,0 +1,14 @@
+.home-card-wide.mdl-card {
+    width: 32em;
+    margin: auto;
+}
+
+.home-card-wide > .mdl-card__title {
+    color: #000000;
+    height: 11em;
+    background: url('../images/21020847-smiling-brain-cartoon-character-training-with-dumbbells.jpg') center / cover;
+}
+
+.home-card-wide > .mdl-card__menu {
+    color: #fff;
+}

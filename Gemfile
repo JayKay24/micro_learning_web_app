@@ -1,0 +1,10 @@
+source 'https://rubygems.org'
+
+gem 'activerecord'
+gem 'haml'
+gem 'pg'
+gem 'rack'
+gem 'rake'
+gem 'shotgun'
+gem 'sinatra'
+gem 'sinatra-activerecord'
