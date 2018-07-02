@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/JayKay24/micro_learning_web_app.svg?branch=develop)](https://travis-ci.org/JayKay24/micro_learning_web_app) [![Coverage Status](https://coveralls.io/repos/github/JayKay24/micro_learning_web_app/badge.svg?branch=develop)](https://coveralls.io/github/JayKay24/micro_learning_web_app?branch=develop) [![Maintainability](https://api.codeclimate.com/v1/badges/3ed04325af1f7014f847/maintainability)](https://codeclimate.com/github/JayKay24/micro_learning_web_app/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/3ed04325af1f7014f847/test_coverage)](https://codeclimate.com/github/JayKay24/micro_learning_web_app/test_coverage)
+
 # Erudite
 
 Erudite, a micro-Learning app is a responsive web application that sends you one page per day about something you want to learn. Could be: a new Language, a random Wikipedia page, React documentation, a page from the CIA World Factbook, anything!

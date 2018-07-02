@@ -1,0 +1,21 @@
+.home-card-wide.mdl-card.mdl-shadow--2dp
+  .mui-container
+    %form{ action: '/signup', name: 'userRegistration', method: 'POST', class: 'mui-form' }
+      %legend Sign Up
+      .mui-textfield.mui-textfield--float-label
+        %input(required){ type: 'text',  name: 'first_name', id: 'first_name'}
+        %label{ for: 'first_name'} First Name
+      .mui-textfield.mui-textfield--float-label
+        %input(required){ type: 'text',  name: 'last_name', id: 'last_name'}
+        %label{ for: 'last_name'} Last Name
+      .mui-textfield.mui-textfield--float-label
+        %input(required){ type: 'email',  name: 'email', id: 'email'}
+        %label{ for: 'email'} Email
+      .mui-textfield.mui-textfield--float-label
+        %input(required){ type: 'password',  name: 'password', id: 'password'}
+        %label{ for: 'password'} Password
+      .mui-textfield.mui-textfield--float-label
+        %input(required){ type: 'password',  name: 're-enter-password', id: 're-enter-password'}
+        %label{ for: 're-enter-password'} Re-enter password
+      %br
+        %button{ type: 'submit', class: 'mui-btn mui-btn--raised' } Sign Up

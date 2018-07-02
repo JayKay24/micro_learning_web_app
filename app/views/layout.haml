@@ -2,28 +2,32 @@
 %html
   %head
     %title Erudite
-    %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1' }
-    %link{ rel: 'stylesheet', href: 'https://code.getmdl.io/1.3.0/material.indigo-pink.min.css' }
-    %link{ rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons' }
-    %link{ rel: 'stylesheet', href: 'stylesheets/styles.css' }
     %script{ defer: true, src: 'https://code.getmdl.io/1.3.0/material.min.js' }
+    %link{ rel: 'stylesheet', href: 'https://code.getmdl.io/1.3.0/material.indigo-pink.min.css' }
+    %link{ rel: 'stylesheet', href: '//cdn.muicss.com/mui-0.9.39/css/mui.min.css' }
+    %link{ rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons' }
+    %link{ rel: 'stylesheet', href: 'https://www.w3schools.com/w3css/4/w3.css' }
+    %link{ rel: 'stylesheet', href: 'stylesheets/styles.css', type: 'text/css' }
+    %script{ rel: 'stylesheet', href: '//cdn.muicss.com/mui-0.9.39/js/mui.min.js' }
+    %script{ src: 'javascript/registration_validation.js' }
   %body
     .mdl-layout.mdl-js-layout
       %header.mdl-layout__header
         .mdl-layout__header-row
           / Title
-          %span.mdl-layout-title Erudite
+          %span.mdl-layout-title.mdl-navigation__link
+            %a{ href: '/' } Erudite
           / Add spacer, to align navigation to the right
           .mdl-layout-spacer
           / Navigation
           %nav.mdl-navigation
-            %a.mdl-navigation__link{ href: '#' }About
-            %a.mdl-navigation__link{ href: '#' }Contact
+            %a.mdl-navigation__link{ href: '#' } About
+            %a.mdl-navigation__link{ href: '#' } Contact
       .mdl-layout__drawer
         %span.mdl-layout-title Home
         %nav.mdl-navigation
-          %a.mdl-navigation__link{ href: '#'}Sign Up
-          %a.mdl-navigation__link{ href: '#' }Sign In
+          %a.mdl-navigation__link{ href: '/signup' } Sign Up
+          %a.mdl-navigation__link{ href: '/login' } Sign In
       %main.mdl-layout__content
         =yield
       %footer.mdl-mini-footer
@@ -31,5 +35,5 @@
           .mdl-logo Erudite
           %ul.mdl-mini-footer__link-list
             %li
-              %a{href: '#'}Help
-              %a{href: '#'}Privacy & Terms
+              %a{ href: '#' } Help
+              %a{ href: '#' } Privacy & Terms
