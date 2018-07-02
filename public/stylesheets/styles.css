@@ -1,6 +1,8 @@
+.home-card-wide {
+    margin: auto;
+}
 .home-card-wide.mdl-card {
     width: 32em;
-    margin: auto;
 }
 
 .home-card-wide > .mdl-card__title {
