@@ -1,3 +1,16 @@
+span > a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+main {
+    background: url('../images/oHHIhSO.jpg');
+}
+
+footer {
+    height: 0.625em;
+}
+
 .home-card-wide {
     margin-top: 7.375em;
     width: 32em;
@@ -11,15 +24,19 @@
     background: url('../images/infinite-loop-of-human-brain-exercising-with-dumbbell-brain-training-memory-concept-with-alpha-channel_rejcl1lwl_thumbnail-small05.jpg') center / cover;
 }
 
-span > a {
-    text-decoration: none;
-    color: #ffffff;
+.category-card-square.mdl-card {
+    width: 320px;
+    height: 320px;
+    float: left;
+    margin: 1rem;
+    position: relative;
 }
 
-main {
-    background: url('../images/oHHIhSO.jpg');
+.category-card-square.mdl-card:hover {
+    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12), 0 5px 5px -3px rgba(0, 0, 0, .2);
 }
 
-footer {
-    height: 0.625em;
+.category-card-square > .mdl-card__title {
+    color: #fff;
+    background-color: #000000;
 }

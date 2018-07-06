@@ -1,51 +1,8 @@
 require_relative '../../models/user'
 require_relative './application_controller'
-require 'warden'
 require 'bcrypt'
 
-class FailureApp
-  def call(env)
-    uri = env['REQUEST_URI']
-    puts "failure #{env['REQUEST_METHOD']}#{uri}"
-  end
-end
-
 class UserController < ApplicationController
-  use Warden::Manager do |config|
-    config.default_strategies :password
-    config.failure_app = FailureApp.new
-  end
-
-  # Session setup
-  Warden::Manager.serialize_into_session do |user|
-    puts '[INFO] serialize into session'
-    user.id
-  end
-
-  Warden::Manager.serialize_from_session do |id|
-    puts '[INFO] serialize from session'
-    User.find(id)
-  end
-
-  # Warden strategies
-  Warden::Strategies.add(:password) do
-    def valid?
-      puts '[INFO] password strategy valid?'
-      params['email'] && params['password']
-    end
-
-    def authenticate!
-      puts '[INFO] password strategy authenticate'
-      user = User.authenticate(params['email'], params['password'])
-
-      user.nil? ? fail!('The email you entered does not exist') : success!(user)
-    end
-  end
-
-  get '/' do
-    haml :home
-  end
-
   get '/signup' do
     haml :signup
   end
@@ -54,10 +11,10 @@ class UserController < ApplicationController
     haml :login
   end
 
-  get '/welcome' do
-    redirect '/login' unless env['warden'].user
-    @current_user = env['warden'].user
-    haml :welcome
+  get '/logout' do
+    warden_handler.logout
+    flash[:success] = 'Successfully logged out'
+    redirect '/'
   end
 
   post '/signup' do
@@ -66,26 +23,26 @@ class UserController < ApplicationController
                      email: params['email'],
                      password: params['password'])
     @user.save
-    env['warden'].authenticate
-
-    flash[:success] = env['warden'].message
-
-    redirect '/welcome'
-  end
-
-  post '/login' do
-    if env['warden'].authenticate
-      flash[:success] = 'Successfully logged in!'
-      redirect '/welcome'
+    warden_handler.authenticate!
+    if warden_handler.authenticated?
+      flash[:success] = 'You were successfully logged in.'
+      # @current_user = current_user
+      redirect '/categories'
     else
-      flash[:error] = 'Invalid login credentials'
-      redirect '/login'
+      flash[:error] = 'There was a problem logging you in.'
+      redirect '/'
     end
   end
 
-  get '/logout' do
-    env['warden'].logout
-    flash[:success] = 'Successfully logged out'
-    redirect '/'
+  post '/login' do
+    warden_handler.authenticate!
+    if warden_handler.authenticated?
+      flash[:success] = 'Successfully logged in!'
+      # @current_user = current_user
+      redirect '/categories'
+    else
+      flash[:error] = 'Invalid login credentials. Please register with the application first.'
+      redirect '/register'
+    end
   end
 end

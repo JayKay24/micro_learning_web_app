@@ -1,0 +1,15 @@
+.mui-container
+  %p
+    - @category_links.each do |category_link|
+      .category-card-square.mdl-card.mdl-shadow--2dp
+        .mdl-card__title.mdl-card--expand
+          %h2.mdl-card__title-text
+            = category_link['name']
+        .mdl-card__supporting-text
+          %a{ href: "#{category_link['displayUrl']}" }
+            = category_link['displayUrl']
+        .mdl-card__supporting-text
+          %a{ href: "#{category_link['snippet']}" }
+        .mdl-card__actions.mdl-card--border
+          %a{ href: '#',
+          class: 'mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect' } Delete
