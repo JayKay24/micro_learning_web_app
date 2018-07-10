@@ -1,0 +1,9 @@
+.home-card-wide.mdl-card.mdl-shadow--2dp
+  .mui-container
+    %form{ action: '/create-category', name: 'createCategory', method: 'POST', class: 'mui-form' }
+    %legend Create Category
+    .mui-textfield.mui-textfield--float-label
+      %input(required){ type: 'text',  name: 'category', id: 'category'}
+      %label{ for: 'first_name'} Category
+    %br
+      %button{ type: 'submit', class: 'mui-btn mui-btn--raised' } Create

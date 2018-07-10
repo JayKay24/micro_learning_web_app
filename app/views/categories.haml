@@ -1,0 +1,17 @@
+.mui-container
+  %p
+    - @categories.each do |category|
+      .category-card-square.mdl-card.mdl-shadow--2dp
+        .mdl-card__title.mdl-card--expand
+          %h2.mdl-card__title-text
+            = category.category_name
+        .mdl-card__supporting-text
+          = "Description: #{category.description}"
+        .mdl-card__supporting-text
+          = "Created at: #{category.created_at}"
+        .mdl-card__actions.mdl-card--border
+          %button{ type: 'submit', class: 'mui-btn mui-btn--raised' }
+            %a{ href: "/category_links/#{category.id}" } Get Links
+        .mdl-card__actions.mdl-card--border
+          %a{ href: "/delete_category/#{category.id}",
+          class: 'mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect' } Delete
