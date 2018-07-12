@@ -9,7 +9,7 @@
           %a{ href: "#{category_link['displayUrl']}" }
             = category_link['displayUrl']
         .mdl-card__supporting-text
-          %a{ href: "#{category_link['snippet']}" }
-        .mdl-card__actions.mdl-card--border
-          %a{ href: '#',
-          class: 'mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect' } Delete
+          = category_link['snippet']
+        -#.mdl-card__actions.mdl-card--border
+        -#  %a{ href: '#',
+        -#  class: 'mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect' } Delete

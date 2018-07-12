@@ -1,25 +1,17 @@
 require_relative '../spec_helper'
-require_relative '../../app/controllers/user_controller'
+require_relative '../../app/controllers/application_controller'
 
-RSpec.describe UserController do
-  it 'should display "Welcome" in the home page' do
-    get '/'
-
-    expect(last_response).to be_ok
-    expect(last_response.body).to include('Welcome to Erudite')
+RSpec.describe ApplicationController do
+  def app
+    @app ||= ApplicationController
   end
 
-  it 'should display "Sign Up" in the sign up page' do
-    get '/signup'
+  describe "GET '/'" do
+    it 'should display welcome in the home page' do
+      get '/'
 
-    expect(last_response).to be_ok
-    expect(last_response.body).to include('Sign Up')
-  end
-
-  it 'should display "Log In" in the log in page' do
-    get '/login'
-
-    expect(last_response).to be_ok
-    expect(last_response.body).to include('Log In')
+      expect(last_response).to be_ok
+      expect(last_response.body).to include('Welcome to Erudite')
+    end
   end
 end

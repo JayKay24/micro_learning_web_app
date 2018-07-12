@@ -1,0 +1,24 @@
+.mui-container
+  .home-card-table
+    %legend
+      %h2 History
+    %table#customers
+      %thead
+        %tr
+          %th
+            Name
+          %th
+            Link
+          %th
+            Snippet
+      %tbody
+        - @category_links.each do |category_link|
+          %tr
+            %td
+              = category_link.link_name
+            %td
+              %a{ href: "#{category_link.link}" }
+                = category_link.link
+            %td
+              = category_link.snippet
+

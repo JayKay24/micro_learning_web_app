@@ -16,11 +16,6 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(
 
 ENV['RACK_ENV'] = 'test'
 
-module RSpecMixin
-  include Rack::Test::Methods
-  def app
-    UserController
-  end
+RSpec.configure do |config|
+  config.include Rack::Test::Methods
 end
-
-RSpec.configure { |config| config.include RSpecMixin }

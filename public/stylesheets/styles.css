@@ -11,6 +11,41 @@ footer {
     height: 0.625em;
 }
 
+td {
+    word-wrap: break-word;
+}
+
+legend {
+    background-color: #ffffff;
+}
+
+#customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    background-color: #ffffff;
+}
+
+#customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#customers tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+
+#customers tr:hover {
+    background-color: #ddd;
+}
+
+.home-card-table {
+    margin-top: 7.375em;
+    /*width: 100em;*/
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+}
+
 .home-card-wide {
     margin-top: 7.375em;
     width: 32em;

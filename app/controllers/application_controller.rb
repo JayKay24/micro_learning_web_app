@@ -14,6 +14,7 @@ end
 class ApplicationController < Sinatra::Base
   # Set folder for templates to ../views, but make the path absolute
   set views: File.expand_path('../views', __dir__)
+  set public: File.expand_path('../../public', __dir__)
 
   configure(:development, :test) { set :session_secret, ENV['SHOTGUN_SECRET'] }
   enable :sessions
@@ -47,16 +48,12 @@ class ApplicationController < Sinatra::Base
     def authenticate!
       puts '[INFO] password strategy authenticate'
       user = User.authenticate(params['email'], params['password'])
-
       if user
         success!(user)
-        # @@current_user = current_user
-        # @current_user = env['warden'].user
       else
-        fail!('The email you entered does not exist')
+        user = User.new
+        success!(user)
       end
-      # success!(user) unless user.nil?
-      # fail!('The email you entered does not exist') if user.nil?
     end
   end
 
@@ -77,6 +74,6 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/' do
-    haml :home
+    haml :'shared/home'
   end
 end

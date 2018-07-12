@@ -18,6 +18,8 @@ ActiveRecord::Schema.define(version: 2018_07_09_143437) do
   create_table "categories", force: :cascade do |t|
     t.string "category_name"
     t.string "description"
+    t.boolean "active", default: false, null: false
+    t.string "time_interval", default: "1", null: false
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -26,6 +28,8 @@ ActiveRecord::Schema.define(version: 2018_07_09_143437) do
 
   create_table "links", force: :cascade do |t|
     t.string "link_name"
+    t.string "link"
+    t.string "snippet"
     t.bigint "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
