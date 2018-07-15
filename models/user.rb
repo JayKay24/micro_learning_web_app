@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
             uniqueness: true,
             format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i }
 
-  has_many :links
+  has_many :categories
 
   # Cipher the password when it is created
   def password=(password)

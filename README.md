@@ -5,7 +5,53 @@
 Erudite, a micro-Learning app is a responsive web application that sends you one page per day about something you want to learn. Could be: a new Language, a random Wikipedia page, React documentation, a page from the CIA World Factbook, anything!
 The Heroku link can be found at:
 ```
-https://ancient-waters-55925.herokuapp.com/
+https://erudite-micro-learning-1234.herokuapp.com/
+```
+
+#### Getting started
+
+```
+$ git clone https://github.com/JayKay24/micro_learning_web_app.git
+$ cd micro_learning_web_app
+```
+
+#### Prerequisites
+
+The Gemfile contains multiple gems to get you up to date with the dependencies
+needed to run the application.
+
+```
+$ gem install bundler
+$ bundle install
+$ shotgun config.ru
+```
+
+Setting up the database:
+```
+$ rake db:create
+$ rake db:migrate
+```
+
+#### Runnning the tests
+
+On the command line, type:
+```
+$ rspec
+```
+
+#### Deployment
+
+Follow the steps to deploy the application to Heroku. You will need the Heroku
+command line tool for this. Download it [here](https://devcenter.heroku.com/start).
+
+```
+$ heroku login
+Enter your Heroku credentials.
+Email: ruby@example.com
+Password:
+$ heroku create
+$ git push heroku <most_recent_branch>:master -f
+$ heroku open
 ```
 
 #### Authors

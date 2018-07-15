@@ -6,27 +6,21 @@ class CategoryController < ApplicationController
   get '/create_category' do
     redirect '/login' unless current_user
     @current_user = current_user
-    haml :create_category
+    haml :'category/create_category'
   end
 
   get '/categories' do
-    puts warden_handler.raw_session.inspect
-    puts current_user
     redirect '/login' unless current_user
     @current_user = current_user
-    @categories = Category.where(user_id: current_user.id)
-    haml :categories
+    @categories = @current_user.categories
+    haml :'category/categories'
   end
 
   post '/create_category' do
-    puts warden_handler.raw_session.inspect
-    puts current_user
     redirect '/login' unless current_user
     @current_user = current_user
-    puts params
-    @category = Category.new(category_name: params[:category],
-                             description: params[:category_description],
-                             user_id: current_user.id)
+    @category = @current_user.categories.create(category_name: params[:category],
+                                                description: params[:category_description])
 
     if @category.save
       flash[:success] = 'Category saved successfully.'

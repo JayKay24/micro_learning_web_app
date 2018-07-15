@@ -11,7 +11,11 @@
           = "Created at: #{category.created_at}"
         .mdl-card__actions.mdl-card--border
           %button{ type: 'submit', class: 'mui-btn mui-btn--raised' }
-            %a{ href: "/category_links/#{category.id}" } Get Links
+            %a{ href: "/category_links/#{category.id}" } All Links
         .mdl-card__actions.mdl-card--border
-          %a{ href: "/delete_category/#{category.id}",
+          %button{ type: 'submit', class: 'mui-btn mui-btn--raised' }
+            %a{ href: "/category_link/#{category.id}" } Get Link
+
+        .mdl-card__actions.mdl-card--border
+          %a{ href: '#',
           class: 'mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect' } Delete

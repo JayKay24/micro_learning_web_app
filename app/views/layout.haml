@@ -26,6 +26,9 @@
           .mdl-layout-spacer
           / Navigation
           %nav.mdl-navigation
+            - if @current_user
+              %a.mdl-navigation__link{ href: '/history' } History
+              %a.mdl-navigation__link{ href: '/settings' } Settings
             %a.mdl-navigation__link{ href: '#' } About
             %a.mdl-navigation__link{ href: '#' } Contact
       .mdl-layout__drawer

@@ -4,11 +4,11 @@ require 'bcrypt'
 
 class UserController < ApplicationController
   get '/signup' do
-    haml :signup
+    haml :'user_management/signup'
   end
 
   get '/login' do
-    haml :login
+    haml :'user_management/login'
   end
 
   get '/logout' do
@@ -18,31 +18,34 @@ class UserController < ApplicationController
   end
 
   post '/signup' do
-    @user = User.new(first_name: params['first_name'],
-                     last_name: params['last_name'],
-                     email: params['email'],
-                     password: params['password'])
-    @user.save
-    warden_handler.authenticate!
-    if warden_handler.authenticated?
-      flash[:success] = 'You were successfully logged in.'
-      # @current_user = current_user
-      redirect '/categories'
+    if /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W]).{8,}$/.match?(params[:password])
+      @user = User.new(first_name: params[:first_name],
+                       last_name: params[:last_name],
+                       email: params[:email],
+                       password: params[:password])
+      @user.save
+      warden_handler.authenticate!
+      current_user = warden_handler.user
+      if current_user
+        flash[:success] = 'You were successfully logged in.'
+        redirect '/categories'
+      else
+        flash[:error] = 'There was a problem logging you in.'
+        redirect '/'
+      end
     else
-      flash[:error] = 'There was a problem logging you in.'
+      flash[:error] = 'Password must contain at least a lowercase letter, a uppercase, a digit, a special char and 8+ chars'
       redirect '/'
     end
   end
 
   post '/login' do
     warden_handler.authenticate!
-    if warden_handler.authenticated?
-      flash[:success] = 'Successfully logged in!'
-      # @current_user = current_user
-      redirect '/categories'
-    else
+    if current_user.first_name.nil?
       flash[:error] = 'Invalid login credentials. Please register with the application first.'
-      redirect '/register'
+      redirect '/signup'
+    else
+      redirect '/categories' if warden_handler.user.first_name
     end
   end
 end
