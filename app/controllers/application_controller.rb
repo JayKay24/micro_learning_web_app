@@ -19,7 +19,6 @@ class ApplicationController < Sinatra::Base
   configure(:development, :test) { set :session_secret, ENV['SHOTGUN_SECRET'] }
   enable :sessions
   register Sinatra::Flash
-  # use Rack::Session::Cookie, secret: ENV['RACK_SECRET']
   use Rack::Session::Cookie
 
   use Warden::Manager do |config|
@@ -29,31 +28,23 @@ class ApplicationController < Sinatra::Base
 
   # Session setup
   Warden::Manager.serialize_into_session do |user|
-    puts '[INFO] serialize into session'
     user.id
   end
 
   Warden::Manager.serialize_from_session do |id|
-    puts '[INFO] serialize from session'
     User.find(id)
   end
 
   # Warden strategies
   Warden::Strategies.add(:password) do
     def valid?
-      puts '[INFO] password strategy valid?'
       params['email'] && params['password']
     end
 
     def authenticate!
-      puts '[INFO] password strategy authenticate'
       user = User.authenticate(params['email'], params['password'])
-      if user
-        success!(user)
-      else
-        user = User.new
-        success!(user)
-      end
+      success!(user) if user
+      success!(User.new) unless user
     end
   end
 
@@ -75,5 +66,10 @@ class ApplicationController < Sinatra::Base
 
   get '/' do
     haml :'shared/home'
+  end
+
+  def check_if_logged_in
+    redirect '/login' unless current_user
+    @current_user = current_user
   end
 end

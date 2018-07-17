@@ -1,10 +1,9 @@
 require_relative '../spec_helper'
 require_relative '../../app/controllers/application_controller'
+require_relative '../helpers/controller_helpers'
 
 RSpec.describe ApplicationController do
-  def app
-    @app ||= ApplicationController
-  end
+  include Helpers::Controllers
 
   describe "GET '/'" do
     it 'should display welcome in the home page' do

@@ -12,7 +12,6 @@ def send_links
     categories.each do |category|
       puts category.category_name
       if category.active
-        puts 'I am active'
         bing_web_search = BingService::BingWebSearchApi.new
         parsed_json = bing_web_search.links(
           category
@@ -21,11 +20,11 @@ def send_links
         puts 'this is the result set'
         puts result_set
         link_name = category.links.find_by(
-          link_name: result_set[0]['displayUrl'])
+          link: result_set[0]['displayUrl'])
         until link_name.nil?
           result_set.shuffle!
           link_name = category.links.find_by(
-            link_name: result_set[0]['displayUrl']
+            link: result_set[0]['displayUrl']
           )
         end
         category_link = category.links.create(
@@ -33,7 +32,6 @@ def send_links
           link: result_set[0]['displayUrl'],
           snippet: result_set[0]['snippet']
         )
-        category_link.save
 
         Pony.mail(to: user.email,
                   from: 'jaykaynjuguna@gmail.com',
