@@ -11,9 +11,7 @@ RSpec.describe UserController do
 
   DatabaseCleaner.strategy = :truncation
 
-  before :each do
-    @user = create(:user)
-  end
+  let(:user) { create(:user) }
 
   after :each do
     Warden.test_reset!
@@ -42,7 +40,7 @@ RSpec.describe UserController do
     context 'with valid login credentials' do
       it 'should login a registered user into the application' do
 
-        post '/login', email: @user.email, password: 'Qwertyuiop123#'
+        post '/login', email: user.email, password: 'Qwertyuiop123#'
 
         expect_redirection_to '/categories'
       end

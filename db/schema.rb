@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2018_07_09_143437) do
     t.string "link_name"
     t.string "link"
     t.string "snippet"
+    t.boolean "scheduled", default: false, null: false
     t.bigint "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

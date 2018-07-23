@@ -10,9 +10,7 @@ RSpec.describe LinkController do
 
   DatabaseCleaner.strategy = :truncation
 
-  before :each do
-    @user = create(:user)
-  end
+  let(:user) { create(:user) }
 
   after :each do
     Warden.test_reset!
@@ -83,9 +81,9 @@ RSpec.describe LinkController do
   end
 
   def login_and_create_category
-    login_as @user
+    login_as user
 
-    @user.categories.create(
+    user.categories.create(
       category_name: 'Superman',
       description: 'All things Superman'
     )

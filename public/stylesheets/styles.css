@@ -27,8 +27,8 @@ legend {
 }
 
 #customers td, #customers th {
-    border: 1px solid #ddd;
-    padding: 8px;
+    border: 0.063em solid #ddd;
+    padding: 0.500em;
 }
 
 #customers tr:nth-child(even){
@@ -41,9 +41,6 @@ legend {
 
 .home-card-table {
     margin-top: 7.375em;
-    /*width: 100em;*/
-    /*margin-left: auto;*/
-    /*margin-right: auto;*/
 }
 
 .home-card-wide {
@@ -60,18 +57,65 @@ legend {
 }
 
 .category-card-square.mdl-card {
-    width: 320px;
-    height: 320px;
+    width: 20.000em;
+    height: 20.000em;
     float: left;
     margin: 1rem;
     position: relative;
 }
 
 .category-card-square.mdl-card:hover {
-    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12), 0 5px 5px -3px rgba(0, 0, 0, .2);
+    box-shadow: 0 0.500em 0.625em 0.063em rgba(0, 0, 0, .14), 0 0.188em 0.875em 0.125em rgba(0, 0, 0, .12), 0 0.313em 0.313em 0.188em rgba(0, 0, 0, .2);
 }
 
 .category-card-square > .mdl-card__title {
     color: #fff;
     background-color: #000000;
+}
+
+
+.custom-modal {
+    visibility: hidden;
+    position: fixed;
+    height: 20.000em;
+    width: 20.000em;
+    margin-left: 31.250em;
+    background-color: white;
+    z-index: 200;
+}
+
+.custom-modal .close-button {
+    height: 1.250em;
+    width: 1.250em;
+    font-size: 1.125em;
+    float: right;
+    cursor: pointer;
+}
+
+.custom-modal-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.54);
+    z-index: 199;
+    visibility: hidden;
+}
+
+.show-modal {
+    visibility: visible;
+}
+
+.custom-modal-header h4 {
+    padding-left: 3.125em;
+    padding-right: 3.125em;
+}
+
+.custom-modal-header, .custom-modal-footer {
+    padding: auto;
+}
+
+#cancel-button {
+    clear: left;
 }

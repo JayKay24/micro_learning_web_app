@@ -30,7 +30,8 @@ def send_links
         category_link = category.links.create(
           link_name: result_set[0]['name'],
           link: result_set[0]['displayUrl'],
-          snippet: result_set[0]['snippet']
+          snippet: result_set[0]['snippet'],
+          scheduled: true
         )
 
         Pony.mail(to: user.email,

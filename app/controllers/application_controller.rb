@@ -20,6 +20,7 @@ class ApplicationController < Sinatra::Base
   enable :sessions
   register Sinatra::Flash
   use Rack::Session::Cookie
+  use Rack::MethodOverride
 
   use Warden::Manager do |config|
     config.default_strategies :password

@@ -1,7 +1,7 @@
 require_relative '../../models/category'
+require_relative '../../app/controllers/user_controller'
 
 class SettingController < ApplicationController
-
   get '/settings' do
     check_if_logged_in
 

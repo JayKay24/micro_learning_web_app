@@ -4,6 +4,7 @@ class CreateLinksTable < ActiveRecord::Migration[5.2]
       t.string :link_name
       t.string :link
       t.string :snippet
+      t.boolean :scheduled, default: false, null: false
 
       t.references :category, foreign_key: true
       t.timestamps

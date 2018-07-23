@@ -9,15 +9,28 @@
             = category.category_name
         .mdl-card__supporting-text
           = "Description: #{category.description}"
-        .mdl-card__supporting-text
-          = "Created at: #{category.created_at}"
         .mdl-card__actions.mdl-card--border
           %button{ type: 'submit', class: 'mui-btn mui-btn--raised' }
             %a{ href: "/category_links/#{category.id}" } All Links
-        .mdl-card__actions.mdl-card--border
           %button{ type: 'submit', class: 'mui-btn mui-btn--raised' }
             %a{ href: "/category_link/#{category.id}" } Get Link
-
         .mdl-card__actions.mdl-card--border
-          %a{ href: '#',
-          class: 'mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect' } Delete
+          %button{ class: 'mui-btn mui-btn--raised'}
+            %a{ href: "/category/#{category.id}" } Edit
+          %button{ class: 'mdl-button mdl-js-button mdl-button--accent trigger', id: "trigger-#{category.id}"} Delete
+          %form{ method: 'POST', id: 'delete-form' }
+            %span
+              %input{ type: 'hidden', name: '_method', value: 'DELETE'}
+
+      %div{ class: 'custom-modal', id: "modal-category-#{category.id}" }
+        .custom-modal-header
+          .close-button x
+        %p.custom-modal-header
+          %h4 Cancel Category
+        %p
+          Are you sure you want to cancel this category?
+        %p.custom-modal-footer
+          %button{ class: 'mdl-button mdl-js-button mdl-button--accent',
+              type: 'submit', formaction: "/category/#{category.id}", form: 'delete-form'} DELETE
+
+.custom-modal-background
