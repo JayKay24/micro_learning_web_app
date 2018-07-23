@@ -1,17 +1,16 @@
 require_relative '../../models/category'
 
 class SettingController < ApplicationController
+  before do
+    check_if_logged_in
+  end
 
   get '/settings' do
-    check_if_logged_in
-
     @categories = @current_user.categories
     haml :'shared/settings'
   end
 
   post '/settings' do
-    check_if_logged_in
-
     @current_user.categories.each do |category|
       category.active = false
       category.save

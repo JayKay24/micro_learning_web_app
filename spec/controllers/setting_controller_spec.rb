@@ -7,9 +7,7 @@ RSpec.describe SettingController do
 
   DatabaseCleaner.strategy = :truncation
 
-  before :each do
-    @user = create(:user)
-  end
+  let(:user) { create(:user) }
 
   after :each do
     Warden.test_reset!
@@ -26,7 +24,7 @@ RSpec.describe SettingController do
 
   context 'with valid login information' do
     it 'should take the user to the settings route' do
-      login_as @user
+      login_as user
 
       get '/settings'
 
@@ -35,9 +33,9 @@ RSpec.describe SettingController do
     end
 
     it 'should activate the category if the user is logged in' do
-      login_as @user
+      login_as user
 
-      category = @user.categories.create(
+      category = user.categories.create(
         category_name: 'Superman',
         description: 'A world of heroes'
       )

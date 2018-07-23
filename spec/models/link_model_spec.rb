@@ -5,9 +5,7 @@ require_relative '../spec_helper'
 RSpec.describe Link, type: :model do
   DatabaseCleaner.strategy = :truncation
 
-  before :each do
-    @user = create(:user)
-  end
+  let(:user) { create(:user) }
 
   after :each do
     DatabaseCleaner.clean
@@ -15,7 +13,7 @@ RSpec.describe Link, type: :model do
 
   context 'with valid attributes provided' do
     it 'should create a new link with the logged in user' do
-      category = @user.categories.create(
+      category = user.categories.create(
         category_name: 'Superman',
         description: 'A world of heroes'
       )
@@ -30,7 +28,7 @@ RSpec.describe Link, type: :model do
 
   context 'with invalid attributes provided' do
     it 'should fail to create a new link with the logged in user' do
-      category = @user.categories.create(
+      category = user.categories.create(
         category_name: 'Superman',
         description: 'A world of heroes'
       )

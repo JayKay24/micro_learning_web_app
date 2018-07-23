@@ -9,9 +9,7 @@ RSpec.describe CategoryController do
 
   DatabaseCleaner.strategy = :truncation
 
-  before :each do
-    @user = create(:user)
-  end
+  let(:user) { create(:user) }
 
   after :each do
     Warden.test_reset!
@@ -26,16 +24,54 @@ RSpec.describe CategoryController do
     end
   end
 
+  describe "GET '/category/:category_id'" do
+    it 'should fetch a category for a logged in user' do
+      login_as user
+
+      category = create_category(user)
+
+      get "/category/#{category.id}"
+
+      expect(last_response.body).to include(category.category_name)
+    end
+  end
+
   describe "POST '/category'" do
     it 'should create a category for a logged in user' do
-      login_as @user
+      login_as user
 
       post '/category',
            category: 'Justice League',
            category_description: 'All things Justice League'
 
       expect_redirection_to '/categories'
-      expect(@user.categories.first.category_name).to eq('Justice League')
+      expect(user.categories.first.category_name).to eq('Justice League')
+    end
+  end
+
+  describe "PUT '/category/:category_id'" do
+    it 'should delete a category for a logged in user' do
+      login_as user
+
+      category = create_category(user)
+
+      put "/category/#{category.id}",
+          category: 'Thawne',
+          description: 'Reverse flash'
+
+      expect_redirection_to '/categories'
+    end
+  end
+
+  describe "DELETE '/category/:category_id'" do
+    it 'should delete a category for a logged in user' do
+      login_as user
+
+      category = create_category(user)
+
+      delete "/category/#{category.id}", category_id: category.id
+
+      expect_redirection_to '/categories'
     end
   end
 end

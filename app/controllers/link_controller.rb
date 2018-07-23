@@ -8,11 +8,13 @@ require_relative '../../services/bing_service'
 require 'warden'
 
 class LinkController < ApplicationController
+  before do
+    check_if_logged_in
+  end
+
   bing_search_api = BingService::BingWebSearchApi.new
 
   get '/category_links/:category_id' do
-    check_if_logged_in
-
     term = @current_user.categories.find(params[:category_id])
     parsed_json = bing_search_api.links(term)
 
@@ -22,8 +24,6 @@ class LinkController < ApplicationController
   end
 
   get '/category_link/:category_id' do
-    check_if_logged_in
-
     term = Category.where(id: params[:category_id].to_i).first
     parsed_json = bing_search_api.links(term)
 
@@ -50,8 +50,6 @@ class LinkController < ApplicationController
   end
 
   get '/history' do
-    check_if_logged_in
-
     @category_links = @current_user.categories.map(&:links).flatten
 
     haml :'shared/link_history'

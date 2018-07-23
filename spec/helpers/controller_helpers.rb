@@ -9,5 +9,12 @@ module Helpers
       follow_redirect!
       expect(last_request.path).to eq(route)
     end
+
+    def create_category(user)
+      user.categories.create(
+        category_name: 'Superman',
+        description: 'All things Superman'
+      )
+    end
   end
 end

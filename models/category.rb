@@ -10,6 +10,6 @@ class Category < ActiveRecord::Base
   validates :time_interval,
             inclusion: { in: ['1', '5', '10'] }
 
-  has_many :links
+  has_many :links, dependent: :destroy
   belongs_to :user
 end
