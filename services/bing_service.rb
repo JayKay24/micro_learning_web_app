@@ -5,7 +5,7 @@ require 'json'
 module BingService
   class BingWebSearchApi
     def links(search_term)
-      access_key = ENV['BING_API_ACCESS_KEY']
+      access_key = 'ff874699981347b49bb78f71f55b63d5'
       uri = 'https://api.cognitive.microsoft.com'
       path = '/bing/v7.0/search'
 

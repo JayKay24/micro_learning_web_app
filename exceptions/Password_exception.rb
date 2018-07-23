@@ -1,0 +1,2 @@
+class PasswordNotValidException < StandardError
+end

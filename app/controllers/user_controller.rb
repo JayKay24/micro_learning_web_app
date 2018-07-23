@@ -18,7 +18,7 @@ class UserController < ApplicationController
   end
 
   post '/signup' do
-    if /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W]).{8,}$/.match?(params[:password])
+    begin
       @user = User.new(first_name: params[:first_name],
                        last_name: params[:last_name],
                        email: params[:email],
@@ -33,9 +33,9 @@ class UserController < ApplicationController
         flash[:error] = 'There was a problem logging you in.'
         redirect '/'
       end
-    else
-      flash[:error] = 'Password must contain at least a lowercase letter, a uppercase, a digit, a special char and 8+ chars'
-      redirect '/'
+    rescue PasswordNotValidException
+      flash[:error] = 'Password must contain at least a lowercase letter, an uppercase, a digit, a special char and 8+ chars'
+      redirect '/signup'
     end
   end
 
@@ -45,6 +45,7 @@ class UserController < ApplicationController
       flash[:error] = 'Invalid login credentials. Please register with the application first.'
       redirect '/signup'
     else
+      flash[:success] = 'Successfully logged in'
       redirect '/categories' if warden_handler.user.first_name
     end
   end

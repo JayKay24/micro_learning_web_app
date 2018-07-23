@@ -11,10 +11,9 @@ class LinkController < ApplicationController
   bing_search_api = BingService::BingWebSearchApi.new
 
   get '/category_links/:category_id' do
-    redirect '/login' unless current_user
-    @current_user = current_user
+    check_if_logged_in
 
-    term = @current_user.categories.find_by(id: params[:category_id].to_i)
+    term = @current_user.categories.find(params[:category_id])
     parsed_json = bing_search_api.links(term)
 
     @category_links = parsed_json['webPages']['value']
@@ -23,22 +22,20 @@ class LinkController < ApplicationController
   end
 
   get '/category_link/:category_id' do
-    redirect '/login' unless current_user
-    @current_user = current_user
+    check_if_logged_in
 
     term = Category.where(id: params[:category_id].to_i).first
     parsed_json = bing_search_api.links(term)
 
     result_set = parsed_json['webPages']['value']
-    # result_set.shuffle!
 
-    category = @current_user.categories.find_by(id: params[:category_id].to_i)
+    category = @current_user.categories.find(params[:category_id])
 
-    link_name = category.links.find_by(link_name: result_set[0]['displayUrl'])
+    link_name = category.links.find_by(link: result_set[0]['displayUrl'])
 
     until link_name.nil?
       result_set.shuffle!
-      link_name = category.links.find_by(link_name: result_set[0]['displayUrl'])
+      link_name = category.links.find_by(link: result_set[0]['displayUrl'])
     end
 
     category_link = category.links.create(
@@ -53,8 +50,7 @@ class LinkController < ApplicationController
   end
 
   get '/history' do
-    redirect '/login' unless current_user
-    @current_user = current_user
+    check_if_logged_in
 
     @category_links = @current_user.categories.map(&:links).flatten
 

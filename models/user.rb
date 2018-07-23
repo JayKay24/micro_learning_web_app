@@ -1,6 +1,7 @@
 require 'sinatra/activerecord'
 require 'rubygems'
 require 'bcrypt'
+require_relative '../exceptions/Password_exception'
 
 
 class User < ActiveRecord::Base
@@ -16,7 +17,11 @@ class User < ActiveRecord::Base
 
   # Cipher the password when it is created
   def password=(password)
-    self.password_digest = BCrypt::Password.create(password)
+    if /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W]).{8,}$/.match?(password)
+      self.password_digest = BCrypt::Password.create(password)
+    else
+      raise PasswordNotValidException
+    end
   end
 
   def self.authenticate(email, password)
