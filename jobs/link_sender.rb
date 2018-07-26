@@ -17,19 +17,25 @@ def send_links
           category
         )
         result_set = parsed_json['webPages']['value']
-        puts 'this is the result set'
-        puts result_set
+        canonical_url = result_set[0]['displayUrl'].strip
+        unless result_set[0]['displayUrl'].start_with?('http', 'https')
+          canonical_url = 'https://' + result_set[0]['displayUrl'].strip
+        end
         link_name = category.links.find_by(
-          link: result_set[0]['displayUrl'])
+          link: canonical_url)
         until link_name.nil?
           result_set.shuffle!
+          canonical_url = result_set[0]['displayUrl'].strip
+          unless result_set[0]['displayUrl'].start_with?('http', 'https')
+            canonical_url = 'https://' + result_set[0]['displayUrl'].strip
+          end
           link_name = category.links.find_by(
-            link: result_set[0]['displayUrl']
+            link: canonical_url
           )
         end
         category_link = category.links.create(
           link_name: result_set[0]['name'],
-          link: result_set[0]['displayUrl'],
+          link: canonical_url,
           snippet: result_set[0]['snippet'],
           scheduled: true
         )

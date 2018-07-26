@@ -27,10 +27,11 @@
           / Navigation
           %nav.mdl-navigation
             - if @current_user
+              %a.mdl-navigation__link{ href: '/link/view' } Today's link
               %a.mdl-navigation__link{ href: '/history' } History
               %a.mdl-navigation__link{ href: '/settings' } Settings
-            %a.mdl-navigation__link{ href: '#' } About
-            %a.mdl-navigation__link{ href: '#' } Contact
+              %a.mdl-navigation__link{ href: '#' }
+                = @current_user.first_name
       .mdl-layout__drawer
         %span.mdl-layout-title Home
         %nav.mdl-navigation

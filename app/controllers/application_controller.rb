@@ -12,6 +12,13 @@ class FailureApp
 end
 
 class ApplicationController < Sinatra::Base
+  %w[/category /category/* /categories
+     /category_links/* /category_link/*
+     /history /link/* /settings].each do |path|
+    before path do
+      check_if_logged_in
+    end
+  end
   # Set folder for templates to ../views, but make the path absolute
   set views: File.expand_path('../views', __dir__)
   set public: File.expand_path('../../public', __dir__)

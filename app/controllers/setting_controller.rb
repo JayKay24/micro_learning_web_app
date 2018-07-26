@@ -3,19 +3,16 @@ require_relative '../../app/controllers/user_controller'
 
 class SettingController < ApplicationController
   get '/settings' do
-    check_if_logged_in
-
     @categories = @current_user.categories
     haml :'shared/settings'
   end
 
   post '/settings' do
-    check_if_logged_in
-
     @current_user.categories.each do |category|
       category.active = false
       category.save
     end
+
     selected_category = @current_user.categories.find_by(
       category_name: params[:category]
     )

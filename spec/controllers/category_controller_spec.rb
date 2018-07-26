@@ -50,7 +50,7 @@ RSpec.describe CategoryController do
   end
 
   describe "PUT '/category/:category_id'" do
-    it 'should delete a category for a logged in user' do
+    it 'should edit a category for a logged in user' do
       login_as user
 
       category = create_category(user)

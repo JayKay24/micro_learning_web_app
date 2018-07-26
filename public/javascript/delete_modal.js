@@ -10,14 +10,10 @@ triggers.forEach(function(trigger) {
         let modal_id = '#modal-category-' + category_id;
         let active_modal = document.querySelector(modal_id);
 
-        console.log(modal_id);
-
         for(let modal of modals) {
             modal.classList.remove('show-modal');
             modalBackground.classList.remove('show-modal');
         }
-
-        console.log(active_modal.getAttribute('id'));
         active_modal.classList.add('show-modal');
         modalBackground.classList.add('show-modal');
     });

@@ -80,6 +80,33 @@ RSpec.describe LinkController do
     end
   end
 
+  it "should display 'Today's Link'" do
+    login_as user
+
+    get '/link/today' do
+      expect(last_response.body).to include("Today's Link")
+    end
+  end
+
+  it "should show today's link" do
+    category = login_and_create_category
+    category.active = true
+    category.save
+
+    link = category.links.create(
+      link_name: 'Superman - Wikipedia',
+      link: 'https://en.wikipedia.org/wiki/Superman',
+      snippet: 'Superman is a fictional superhero.',
+      scheduled: true
+    )
+    puts link.link_name, link.link, link.snippet, link.scheduled
+
+    get '/link/view'
+
+    expect_redirection_to '/link/today'
+    expect(last_response.body).to include('Superman')
+  end
+
   def login_and_create_category
     login_as user
 

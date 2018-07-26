@@ -10,3 +10,7 @@
             = category_link['displayUrl']
         .mdl-card__supporting-text
           = category_link['snippet']
+
+      - if @category_links.length == 1
+        %p
+          %iframe{ src: "#{category_link['displayUrl']}" , frameborder: 0 }
