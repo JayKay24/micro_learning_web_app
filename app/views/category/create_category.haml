@@ -1,0 +1,13 @@
+.mui-container
+  .home-card-wide.mdl-card.mdl-shadow--2dp
+    %form{ action: '/category', name: 'createCategory', method: 'POST', class: 'mui-form' }
+      %legend Create Category
+      .mui-textfield.mui-textfield--float-label
+        %input(required){ type: 'text',  name: 'category', id: 'category'}
+        %label{ for: 'category'} Category
+      .mui-textfield.mui-textfield--float-label
+        %textarea(required){ type: 'text', name: 'category_description', id: 'category_description' }
+        %label{ for: 'category_description' } Description
+      %br
+        %button{ type: 'submit', class: 'mui-btn mui-btn--raised' } Create
+        %a{ class: 'mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect', href: '/categories' } Cancel

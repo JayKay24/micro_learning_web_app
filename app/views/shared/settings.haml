@@ -1,0 +1,50 @@
+.mui-container
+  .home-card-table
+    %legend
+      %h2 Settings
+  %form{ action: '/settings', name: 'settings', method: 'POST', class: 'mui-form' }
+    - @categories.each do |category|
+      .category-card-square.mdl-card.mdl-shadow--2dp
+        .mdl-card__supporting-text
+          = "Description: #{category.description}"
+        .mdl-card__actions.mdl-card--border
+        .mdl-card__supporting-text
+          = "Created at: #{category.created_at}"
+        .mdl-card__actions.mdl-card--border
+          %ul.md-list
+            %li.mdl-list-item
+              %span.mdl-list__item-primary-content
+                = "#{category.category_name}"
+              %span.mdl-list__item-secondary-action
+                %label{ class: 'mdl-radio mdl-js-radio mdl-js-ripple-effect',
+                   for: "#{category.category_name}" }
+                  %input{ type: 'radio', name: 'category',
+                    id: "#{category.category_name}",
+                    value: "#{category.category_name}",
+                    class: 'mdl-radio__button',
+                    checked: (category.active ? true : false) }
+
+    .category-card-square.mdl-card.mdl-shadow--2dp
+      .mdl-card__title.mdl-card--expand
+        %h2.mdl-card__title-text
+        Set Interval to receive a link
+      .mdl-card__actions.mdl-card--border
+        %ul.mdl-list
+          %li.mdl-list__item
+            %span.mdl-list__item-primary-content
+              5 secs
+            %span.mdl-list__item-secondary-action
+              %label{ class: 'mdl-radio mdl-js-radio mdl-js-ripple-effect',
+                 for: '1-day' }
+                %input{ type: 'radio', class: 'mdl-radio__button',
+                 id: '1-day', name: 'time_interval', value: '5', checked: true }
+          %li.mdl-list__item
+            %span.mdl-list__item-primary-content
+              10 secs
+            %span.mdl-list__item-secondary-action
+              %label{ class: 'demo-list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect',
+                 for: '30-mins' }
+                %input{ type: 'radio', class: 'mdl-radio__button',
+                id: '30-mins', name: 'time_interval', value: '10' }
+    %div
+      %button{ type: 'submit', class: 'mui-btn mui-btn--raised' } Save Changes

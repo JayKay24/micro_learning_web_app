@@ -1,0 +1,16 @@
+.mui-container
+  %legend
+    %h2 Today's Link
+  - if @latest_link
+    %p
+      .category-card-square.mdl-card.mdl-shadow--2dp
+        .mdl-card__title.mdl-card--expand
+          %h2.mdl-card__title-text
+            = @latest_link.link_name
+        .mdl-card__supporting-text
+          %a{ href: "#{@latest_link.link}" }
+            = @latest_link.link
+        .mdl-card__supporting-text
+          = @latest_link.snippet
+    %p
+      %iframe{ src: "#{@latest_link.link}" , frameborder: 0}

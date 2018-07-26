@@ -1,0 +1,1 @@
+require_relative './controllers/application_controller_spec'

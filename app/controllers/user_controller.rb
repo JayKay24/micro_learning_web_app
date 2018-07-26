@@ -1,13 +1,52 @@
+require_relative '../../models/user'
+require_relative './application_controller'
+require 'bcrypt'
+
 class UserController < ApplicationController
-  get '/users' do
-    @users = User.all
-    haml :users
+  get '/signup' do
+    haml :'user_management/signup'
   end
 
-  post '/submit' do
-    @user = User.new(params[:user])
+  get '/login' do
+    haml :'user_management/login'
+  end
 
-    'Sorry, there was an error!' unless @user.save
-    redirect '/users' if @user.save
+  get '/logout' do
+    warden_handler.logout
+    flash[:success] = 'Successfully logged out'
+    redirect '/'
+  end
+
+  post '/signup' do
+    begin
+      @user = User.new(first_name: params[:first_name],
+                       last_name: params[:last_name],
+                       email: params[:email],
+                       password: params[:password])
+      @user.save
+      warden_handler.authenticate!
+      current_user = warden_handler.user
+      if current_user
+        flash[:success] = 'You were successfully logged in.'
+        redirect '/categories'
+      else
+        flash[:error] = 'There was a problem logging you in.'
+        redirect '/'
+      end
+    rescue PasswordNotValidException
+      flash[:error] = 'Password must contain at least a lowercase letter, an uppercase, a digit, a special char and 8+ chars'
+      redirect '/signup'
+    end
+  end
+
+  post '/login' do
+    warden_handler.authenticate!
+    if current_user.first_name.nil?
+      flash[:error] = 'Invalid login credentials. Please register with the application first.'
+      redirect '/signup'
+    else
+      flash[:success] = 'Successfully logged in'
+      redirect '/categories' if warden_handler.user.first_name
+    end
   end
 end

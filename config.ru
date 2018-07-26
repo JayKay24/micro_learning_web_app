@@ -1,8 +1,15 @@
 require 'sinatra/base'
+require './models/user'
 require './app/controllers/application_controller'
+require './app/controllers/category_controller'
 require './app/controllers/user_controller'
+require './app/controllers/link_controller'
+require './app/controllers/setting_controller'
+require 'rack'
 
-# Map the controllers to the routes
-map('/users') { run UserController }
-map('/submit') { run UserController }
-map('/') { run ApplicationController }
+use SettingController
+use LinkController
+use CategoryController
+use UserController
+
+run ApplicationController
