@@ -3,6 +3,7 @@ require_relative '../../app/controllers/category_controller'
 require 'database_cleaner'
 require 'warden'
 require_relative '../helpers/controller_helpers'
+require_relative '../../models/category.rb'
 
 RSpec.describe CategoryController do
   include Helpers::Controllers
@@ -16,9 +17,9 @@ RSpec.describe CategoryController do
     DatabaseCleaner.clean
   end
 
-  describe "GET '/categories'" do
+  describe "GET '/category'" do
     it 'should redirect to login if user is not logged in' do
-      get '/categories'
+      get '/category'
 
       expect_redirection_to '/login'
     end
@@ -44,7 +45,7 @@ RSpec.describe CategoryController do
            category: 'Justice League',
            category_description: 'All things Justice League'
 
-      expect_redirection_to '/categories'
+      expect_redirection_to '/category'
       expect(user.categories.first.category_name).to eq('Justice League')
     end
   end
@@ -57,9 +58,12 @@ RSpec.describe CategoryController do
 
       put "/category/#{category.id}",
           category: 'Thawne',
-          description: 'Reverse flash'
+          category_description: 'Reverse flash'
 
-      expect_redirection_to '/categories'
+      expect_redirection_to '/category'
+      expect(last_response.body).to include('Successfully edited the category')
+      expect(user.categories.first.category_name).to eq('Thawne')
+      expect(user.categories.first.description).to eq('Reverse flash')
     end
   end
 
@@ -68,10 +72,10 @@ RSpec.describe CategoryController do
       login_as user
 
       category = create_category(user)
+      delete "/category/#{category.id}"
 
-      delete "/category/#{category.id}", category_id: category.id
-
-      expect_redirection_to '/categories'
+      expect_redirection_to '/category'
+      expect(Category.count).to eq(0)
     end
   end
 end

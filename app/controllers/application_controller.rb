@@ -12,9 +12,7 @@ class FailureApp
 end
 
 class ApplicationController < Sinatra::Base
-  %w[/category /category/* /categories
-     /category_links/* /category_link/*
-     /history /link/* /settings].each do |path|
+  %w[/category /category/* /history /link/* /settings].each do |path|
     before path do
       check_if_logged_in
     end

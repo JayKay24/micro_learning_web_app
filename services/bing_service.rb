@@ -5,13 +5,11 @@ require 'json'
 module BingService
   class BingWebSearchApi
     def links(search_term)
-      access_key = '4941867e914446b1a61d41149439c7ec'
+      access_key = ENV['BING_API_ACCESS_KEY']
       uri = 'https://api.cognitive.microsoft.com'
       path = '/bing/v7.0/search'
 
       uri = URI(uri + path + '?q=' + URI.escape(search_term.category_name))
-
-      puts 'Searching the Web for: ' + search_term.category_name
 
       request = Net::HTTP::Get.new(uri)
       request['Ocp-Apim-Subscription-Key'] = access_key

@@ -4,24 +4,15 @@ require_relative '../spec_helper'
 require 'database_cleaner'
 
 RSpec.describe User, type: :model do
-  DatabaseCleaner.strategy = :truncation
-
-  before :all do
-    DatabaseCleaner.clean
-  end
-
-  after :each do
-    DatabaseCleaner.clean
-  end
-
   context 'with valid attributes provided' do
     it 'should be valid with valid attributes' do
-      expect(User.new(
-               first_name: 'Clark',
-               last_name: 'Kent',
-               email: 'clark@example.com',
-               password: 'Qwertyuiop123#'
-             )).to be_valid
+      should validate_presence_of :first_name
+      should validate_presence_of :last_name
+      should validate_presence_of :email
+    end
+
+    it 'should have many categories' do
+      should have_many :categories
     end
   end
 
@@ -31,18 +22,16 @@ RSpec.describe User, type: :model do
     end
 
     it 'should have a unique email' do
-      create(:user)
-      user2 = build(:user, first_name: 'Lex',
-                           last_name: 'Luthor',
-                           email: 'clark@example.com',
-                           password: 'Qwertyuiop123#')
-
-      expect(user2).to be_invalid
+      should validate_uniqueness_of :email
     end
 
-
     it 'should raise a PasswordNotValidException if an invalid password is given' do
-      expect { build(:user, password: 'qwertyuiop') }.to raise_exception(PasswordNotValidException)
+      expect {
+        build(:user, password: 'qwertyuiop')
+      }.to raise_exception(PasswordNotValidException)
+      expect {
+        build(:user, password: nil) 
+      }.to raise_exception(PasswordNotValidException)
     end
   end
 end

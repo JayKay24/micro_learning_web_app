@@ -5,6 +5,7 @@ require 'simplecov'
 require 'simplecov-console'
 require_relative './helpers/factory_bot'
 require 'warden'
+require 'shoulda/matchers'
 
 require_relative '../services/bing_service'
 require_relative 'mocks/bing_mock'
@@ -24,6 +25,8 @@ ENV['RACK_ENV'] = 'test'
 RSpec.configure do |config|
   config.include Rack::Test::Methods
   config.include Warden::Test::Helpers
+  config.include(Shoulda::Matchers::ActiveModel, type: :model)
+  config.include(Shoulda::Matchers::ActiveRecord, type: :model)
 
   config.before(:each) do
     allow(BingService::BingWebSearchApi).to receive(:links).and_return BingMock.new.links

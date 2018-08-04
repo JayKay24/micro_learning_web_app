@@ -10,7 +10,7 @@ require 'warden'
 class LinkController < ApplicationController
   bing_search_api = BingService::BingWebSearchApi.new
 
-  get '/category_links/:category_id' do
+  get '/category/:category_id/links' do
     term = @current_user.categories.find(params[:category_id])
     parsed_json = bing_search_api.links(term)
 
@@ -19,7 +19,7 @@ class LinkController < ApplicationController
     haml :'category/category_links'
   end
 
-  get '/category_link/:category_id' do
+  get '/category/:category_id/link' do
     term = Category.where(id: params[:category_id].to_i).first
     parsed_json = bing_search_api.links(term)
 
@@ -48,7 +48,6 @@ class LinkController < ApplicationController
       link: canonical_url,
       snippet: result_set[0]['snippet']
     )
-    category_link.save
     @category_links = [{
       'name' => category_link.link_name,
       'displayUrl' => category_link.link,

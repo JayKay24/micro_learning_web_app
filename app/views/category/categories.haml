@@ -11,9 +11,9 @@
           = "Description: #{category.description}"
         .mdl-card__actions.mdl-card--border
           %button{ type: 'submit', class: 'mui-btn mui-btn--raised' }
-            %a{ href: "/category_links/#{category.id}" } All Links
+            %a{ href: "/category/#{category.id}/links" } All Links
           %button{ type: 'submit', class: 'mui-btn mui-btn--raised' }
-            %a{ href: "/category_link/#{category.id}" } Get Link
+            %a{ href: "/category/#{category.id}/link" } Get Link
         .mdl-card__actions.mdl-card--border
           %button{ class: 'mui-btn mui-btn--raised'}
             %a{ href: "/category/#{category.id}" } Edit
