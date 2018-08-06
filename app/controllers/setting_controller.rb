@@ -17,11 +17,12 @@ class SettingController < ApplicationController
       category_name: params[:category]
     )
     if selected_category
-      selected_category.active = true
-      selected_category.time_interval = params[:time_interval]
+      selected_category.update(
+        active: true, time_interval: params[:time_interval]
+      )
       if selected_category.save
         flash[:success] = 'Settings saved successfully'
-        redirect '/categories'
+        redirect '/category'
       else
         flash[:error] = 'There was an error saving your settings'
         redirect '/settings'

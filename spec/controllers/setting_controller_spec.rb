@@ -1,6 +1,7 @@
 require_relative '../spec_helper'
 require_relative '../../app/controllers/setting_controller'
 require_relative '../helpers/controller_helpers'
+require_relative '../../models/category.rb'
 
 RSpec.describe SettingController do
   include Helpers::Controllers
@@ -40,10 +41,11 @@ RSpec.describe SettingController do
         description: 'A world of heroes'
       )
 
-      post '/settings', category: 'Superman', time_interval: '10'
+      post '/settings', category: category.category_name, time_interval: '10'
 
       expect(category.save).to be true
-      expect_redirection_to '/categories'
+      expect_redirection_to '/category'
+      expect(Category.first.active).to be true
     end
   end
 end

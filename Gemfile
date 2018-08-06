@@ -12,7 +12,6 @@ gem 'rack'
 gem 'rack-test', require: 'rack/test'
 gem 'rake'
 gem 'rspec'
-gem 'rufus-scheduler', '~> 3.2'
 gem 'shotgun'
 gem 'simplecov', '~> 0.12.0', require: false
 gem 'simplecov-console', '~> 0.4.1', require: false
@@ -25,4 +24,5 @@ group :test do
   gem 'database_cleaner'
   gem 'factory_bot'
   gem 'pry'
+  gem 'shoulda-matchers', '~> 3.1'
 end

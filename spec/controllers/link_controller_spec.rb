@@ -3,6 +3,7 @@ require_relative '../../app/controllers/link_controller'
 require 'database_cleaner'
 require 'warden'
 require_relative '../helpers/controller_helpers'
+require_relative '../../models/link.rb'
 
 
 RSpec.describe LinkController do
@@ -25,57 +26,44 @@ RSpec.describe LinkController do
     end
   end
 
-  describe "GET '/category_links/:category_id'" do
+  describe "GET '/category/:category_id/link'" do
     context 'authenticated user' do
       it 'should display category links of the selected category' do
-
         login_and_create_category
 
-        get '/category_links/1'
+        get '/category/1/links'
 
         expect(last_response.body).to include('Superman')
-        expect(last_request.path).to eq('/category_links/1')
+        expect(last_request.path).to eq('/category/1/links')
       end
     end
 
     context 'unauthenticated user' do
       it 'should redirect an unauthenticated user back to login' do
-        get '/category_links/1'
+        get '/category/1/links'
 
         expect_redirection_to '/login'
       end
     end
   end
 
-  describe "GET '/category_link/:category_id'" do
-      context 'authenticated user' do
-        it 'should display a link of the selected category' do
+  describe "GET '/category/:category_id/link'" do
+    context 'authenticated user' do
+      it 'should display a link of the selected category' do
+        login_and_create_category
 
-          login_and_create_category
+        get '/category/1/link'
 
-          get '/category_link/1'
-
-          expect(last_request.path).to eq('/category_link/1')
-        end
-      end
-
-      context 'unauthenticated user' do
-        it 'should redirect an unauthenticated user back to login' do
-          get '/category_links/1'
-
-          expect_redirection_to '/login'
-        end
+        expect(last_request.path).to eq('/category/1/link')
+        expect(Link.count).to eq(1)
       end
     end
 
-  describe "POST '/category_links/:category_id'" do
-    context 'already logged in user' do
-      it 'should fetch all links pertaining to the category ' do
-        login_and_create_category
+    context 'unauthenticated user' do
+      it 'should redirect an unauthenticated user back to login' do
+        get '/category/1/link'
 
-        get '/category_links/1'
-
-        expect(last_request.path).to eq('/category_links/1')
+        expect_redirection_to '/login'
       end
     end
   end
@@ -99,12 +87,12 @@ RSpec.describe LinkController do
       snippet: 'Superman is a fictional superhero.',
       scheduled: true
     )
-    puts link.link_name, link.link, link.snippet, link.scheduled
 
     get '/link/view'
 
     expect_redirection_to '/link/today'
     expect(last_response.body).to include('Superman')
+    expect(last_response.body).to include('https://en.wikipedia.org/wiki/Superman')
   end
 
   def login_and_create_category

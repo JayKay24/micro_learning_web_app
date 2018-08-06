@@ -5,6 +5,7 @@ require 'database_cleaner'
 require 'rake'
 require 'warden'
 require_relative '../helpers/controller_helpers'
+require_relative '../../models/user.rb'
 
 RSpec.describe UserController do
   include Helpers::Controllers
@@ -39,23 +40,14 @@ RSpec.describe UserController do
   describe "POST '/login'" do
     context 'with valid login credentials' do
       it 'should login a registered user into the application' do
-
         post '/login', email: user.email, password: 'Qwertyuiop123#'
 
-        expect_redirection_to '/categories'
-      end
-
-      it 'should log out a registered user from the application' do
-        get '/logout'
-
-        expect_redirection_to '/'
-        expect(last_response.body).to include('Successfully logged out')
+        expect_redirection_to '/category'
       end
     end
 
     context 'with invalid login credentials' do
       it 'should redirect the user to the signup page' do
-
         post '/login', email: 'kal-el@example.com', password: 'NoQwertyuiop123#'
 
         expect_redirection_to '/signup'
@@ -66,20 +58,18 @@ RSpec.describe UserController do
   describe "POST '/signup'" do
     context 'with valid registration information' do
       it 'should register a user into the application' do
-
         post '/signup',
              first_name: 'James',
              last_name: 'Njuguna',
              email: 'jameskinyua590@gmail.com',
              password: 'Qwertyuiop123#'
 
-        expect_redirection_to '/categories'
+        expect_redirection_to '/category'
       end
     end
 
     context 'with invalid registration information' do
       it 'should not register a user into the application' do
-
         post '/signup',
              first_name: nil,
              last_name: nil,
@@ -87,7 +77,21 @@ RSpec.describe UserController do
              password: nil
 
         expect_redirection_to '/signup'
+        expect(User.count).to eq(0)
       end
+    end
+  end
+
+  describe "GET '/logout'" do
+    it 'should log out a registered user from the application' do
+      post '/login', email: user.email, password: 'Qwertyuiop123#'
+
+      expect_redirection_to '/category'
+
+      get '/logout'
+
+      expect_redirection_to '/'
+      expect(last_response.body).to include('Successfully logged out')
     end
   end
 end

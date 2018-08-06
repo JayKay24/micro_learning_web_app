@@ -7,7 +7,7 @@ class CategoryController < ApplicationController
     haml :'category/create_category'
   end
 
-  get '/categories' do
+  get '/category' do
     @categories = @current_user.categories
     haml :'category/categories'
   end
@@ -30,7 +30,7 @@ class CategoryController < ApplicationController
       flash[:error] = @category.errors.messages[:category_name][0]
     end
 
-    redirect '/categories'
+    redirect '/category'
   end
 
   put '/category/:category_id' do
@@ -41,7 +41,7 @@ class CategoryController < ApplicationController
     if category.saved_changes.empty? == false
       flash[:success] = 'Successfully edited the category'
     end
-    redirect '/categories'
+    redirect '/category'
   end
 
   delete '/category/:category_id' do
@@ -49,6 +49,6 @@ class CategoryController < ApplicationController
 
     category.destroy
     flash[:success] = 'Successfully deleted category'
-    redirect '/categories'
+    redirect '/category'
   end
 end
