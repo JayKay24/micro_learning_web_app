@@ -31,7 +31,7 @@ module LinkSender
   def send_links
     users = User.all
     users.each do |user|
-      categories = user.categories
+      categories = user.categories.includes(:links)
       categories.each do |category|
         if category.active
           bing_web_search = BingService::BingWebSearchApi.new
